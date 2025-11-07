@@ -1,0 +1,71 @@
+/* --- IDENTIFICADORES DEL FORMULARIO --- */
+::placeholder {
+  color: #ccc !important; /* Color gris muy claro para máxima visibilidad */
+}
+
+/* --- ESTILOS DEL MENÚ (INTERACCIÓN) --- */
+
+/* Estado base de los títulos del menú */
+.menu-link h1 {
+  color: white !important;
+  transition: color 0.1s ease-out;
+}
+
+/* Para dispositivos que SÍ pueden hacer hover (laptops, etc.) */
+@media (hover: hover) {
+  .menu-link:hover h1 {
+    color: #00BFFF !important;
+  }
+}
+
+/* Para dispositivos que NO pueden hacer hover (teléfonos, etc.) */
+@media (hover: none) {
+  .menu-link:active h1 {
+    color: #00BFFF !important;
+  }
+}
+
+/* --- ELIMINAR EFECTOS DE TOQUE NO DESEADOS EN MÓVILES --- */
+
+/* Elimina el resaltado de toque (cuadrado azul/gris) */
+.menu-link {
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Asegura que no haya fondo de color o contorno al tocar */
+.menu-link:active,
+.menu-link:focus {
+  background-color: transparent !important;
+  outline: none !important;
+}
+
+/* --- ESTILOS DEL FORMULARIO (INPUTS) --- */
+.form-input {
+  color: white !important;
+  font-family: Arial, sans-serif;
+}
+
+/* Para dispositivos que NO pueden hacer hover (teléfonos, etc.) */
+@media (hover: none) {
+  .menu-link:active h1 {
+    color: #00BFFF !important;
+    transition: color 0.1s ease-out; /* Asegura la transición al soltar el toque */
+  }
+}
+
+/* Estilos para campos autocompletados */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px black inset !important;
+    -webkit-text-fill-color: white !important;
+    background-color: black !important;
+    color: white !important;
+}
+
+/* Para navegadores que usan -internal-autofill-selected */
+input:-internal-autofill-selected {
+    background-color: black !important;
+    color: white !important;
+}
