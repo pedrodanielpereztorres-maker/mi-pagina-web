@@ -3,7 +3,7 @@ import os
 
 config = rx.Config(
     app_name="hola",
-    db_url=os.environ.get("DATABASE_URL", "postgresql://postgres:V32273930@localhost:5432/mi_pagina"),
+    db_url=os.environ.get("DATABASE_URL"),
     api_url=os.environ.get("RENDER_EXTERNAL_URL"),
     plugins=[
         rx.plugins.SitemapPlugin(),
