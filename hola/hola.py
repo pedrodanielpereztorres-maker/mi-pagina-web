@@ -181,50 +181,30 @@ def contacto_form() -> rx.Component:
     )
 
 
+def texto_descripcion(texto: str) -> rx.Component:
+    return rx.text(
+        texto,
+        color="white",
+        font_size=rx.breakpoints(
+            initial="1.1em", sm="1.2em", md="1.3em", lg="1.4em", xl="1.5em"),
+        text_align="justify",
+        line_height="1.6",
+    )
+
+
 def descripcion() -> rx.Component:
     return rx.center(
         rx.box(
             rx.heading("Sobre Mí:", color="white", size="7"),
-            rx.text(
-                "Soy Pedro Pérez, analista de sistemas y apasionado por la innovación tecnológica.",
-                color="white",
-                font_family="Inter",
-                font_size=rx.breakpoints(
-                    initial="16px", sm="18px", md="20px", lg="20px", xl="24px"),
-                line_height="1.6",
-            ),
-            rx.text(
-                " Mi experiencia abarca desde el desarrollo modular en C++ y Python hasta la gestión de bases de datos SQL y NoSQL, siempre con el objetivo de crear soluciones sólidas, prácticas y con visión de futuro.",
-                color="white",
-                font_family="Inter",
-                font_size=rx.breakpoints(
-                    initial="16px", sm="18px", md="20px", lg="20px", xl="24px"),
-                line_height="1.6",
-            ),
-            rx.text(
-                "No me conformo con lo establecido: me gusta ir siempre más allá, romper los límites, porque estoy convencido de que uno no tiene límites.",
-                color="white",
-                font_family="Inter",
-                font_size=rx.breakpoints(
-                    initial="16px", sm="18px", md="20px", lg="20px", xl="24px"),
-                line_height="1.6",
-            ),
-            rx.text(
-                "Estoy aquí para transformar ideas en soluciones tecnológicas que marquen la diferencia.",
-                color="white",
-                font_family="Inter",
-                font_size=rx.breakpoints(
-                    initial="16px", sm="18px", md="20px", lg="20px", xl="24px"),
-                line_height="1.6",
-            ),
-            rx.text(
-                "Me considero un visionario tecnológico, alguien que combina lógica, creatividad y propósito para convertir ideas en realidades. Cada proyecto es para mí una oportunidad de innovar, de enseñar con claridad y de dejar huella en el camino.",
-                color="white",
-                font_family="Inter",
-                font_size=rx.breakpoints(
-                    initial="16px", sm="18px", md="20px", lg="20px", xl="24px"),
-                line_height="1.6",
-            ),
+            texto_descripcion(
+                "Soy Pedro Pérez, analista de sistemas y apasionado por la innovación tecnológica."),
+            texto_descripcion(
+                "Mi experiencia abarca desde el desarrollo modular en C++ y Python hasta la gestión de bases de datos SQL y NoSQL, siempre con el objetivo de crear soluciones sólidas, prácticas y con visión de futuro."),
+            texto_descripcion(
+                "No me conformo con lo establecido: me gusta ir siempre más allá, romper los límites, porque estoy convencido de que uno no tiene límites."),
+            texto_descripcion(
+                "Estoy aquí para transformar ideas en soluciones tecnológicas que marquen la diferencia."),
+            texto_descripcion("Me considero un visionario tecnológico, alguien que combina lógica, creatividad y propósito para convertir ideas en realidades. Cada proyecto es para mí una oportunidad de innovar, de enseñar con claridad y de dejar huella en el camino."),
             id="sobre-mi",
             scroll_margin_top="6rem",
             spacing="6",
