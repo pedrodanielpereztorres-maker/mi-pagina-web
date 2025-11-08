@@ -1,3 +1,4 @@
+import reflex as rx
 import sqlmodel
 from sqlmodel import Session, create_engine, SQLModel, Field
 from os import environ
@@ -10,6 +11,7 @@ engine = create_engine(DATABASE_URL)
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
 
+@rx.ModelRegistry.register
 class Usuarios(SQLModel, table=True):
     id_usuario: int | None = Field(default=None, primary_key=True)
     nombre: str

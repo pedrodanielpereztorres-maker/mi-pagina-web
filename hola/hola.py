@@ -386,5 +386,9 @@ def pagina_principal() -> rx.Component:
     )
 
 
-app = rx.App(stylesheets=["/custom.css"])
-app.add_page(pagina_principal, route="/")
+def create_reflex_app(api_transformer=None):
+    app = rx.App(stylesheets=["/custom.css"], api_transformer=api_transformer)
+    app.add_page(pagina_principal, route="/")
+    return app
+
+app = create_reflex_app()

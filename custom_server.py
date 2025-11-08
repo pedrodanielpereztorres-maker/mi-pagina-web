@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from backend_api import save_usuario, create_db_and_tables
 from pydantic import BaseModel
 import reflex as rx
-from hola.hola import app as rx_app # Importar la instancia de la app Reflex
+from hola.hola import create_reflex_app # Importar la función para crear la app Reflex
 
 # Define un modelo Pydantic para los datos del formulario
 class ContactForm(BaseModel):
@@ -28,5 +28,5 @@ async def contact_submit(form_data: ContactForm):
     except Exception as e:
         return {"message": f"Error al guardar el formulario: {str(e)}", "status": "error"}
 
-# Montar la aplicación Reflex en la aplicación FastAPI
-rx.mount_app(app, rx_app)
+# Inicializar la aplicación Reflex y montarla en la aplicación FastAPI
+rx_app = create_reflex_app(api_transformer=app)
