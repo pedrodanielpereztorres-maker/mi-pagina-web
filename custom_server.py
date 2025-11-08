@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from backend_api import save_usuario, create_db_and_tables
 from pydantic import BaseModel
+from starlette.staticfiles import StaticFiles
 
 # Define un modelo Pydantic para los datos del formulario
 class ContactForm(BaseModel):
@@ -25,3 +26,5 @@ async def contact_submit(form_data: ContactForm):
         return {"message": "Formulario enviado con éxito"}
     except Exception as e:
         return {"message": f"Error al guardar el formulario: {str(e)}", "status": "error"}
+
+app.mount("/", StaticFiles(directory="public", html=True), name="public")
