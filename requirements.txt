@@ -1,3 +1,20 @@
 
-reflex==0.8.17
+
+
+reflex
+
+
+
 psycopg2-binary
+
+
+
+gunicorn
+
+
+
+fastapi
+
+
+
+uvicorn
