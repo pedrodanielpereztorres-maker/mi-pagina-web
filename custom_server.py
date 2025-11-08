@@ -10,4 +10,4 @@ app = FastAPI()
 async def health_check():
     return {"status": "ok"}
 
-app.mount("/", reflex_app)
+app.mount("/", reflex_app.api)
