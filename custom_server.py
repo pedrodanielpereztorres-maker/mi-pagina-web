@@ -1,7 +1,8 @@
 from fastapi import FastAPI, Request
 from backend_api import save_usuario, create_db_and_tables
 from pydantic import BaseModel
-from starlette.staticfiles import StaticFiles
+import reflex as rx
+from hola.hola import app as rx_app # Importar la instancia de la app Reflex
 
 # Define un modelo Pydantic para los datos del formulario
 class ContactForm(BaseModel):
@@ -27,4 +28,5 @@ async def contact_submit(form_data: ContactForm):
     except Exception as e:
         return {"message": f"Error al guardar el formulario: {str(e)}", "status": "error"}
 
-app.mount("/", StaticFiles(directory="public", html=True), name="public")
+# Montar la aplicación Reflex en la aplicación FastAPI
+rx.mount_app(app, rx_app)
