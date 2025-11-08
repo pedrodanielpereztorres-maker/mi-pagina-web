@@ -3,6 +3,8 @@ from backend_api import save_usuario, create_db_and_tables
 from pydantic import BaseModel
 import reflex as rx
 from hola.hola import create_reflex_app # Importar la función para crear la app Reflex
+from starlette.staticfiles import StaticFiles
+import os
 
 # Define un modelo Pydantic para los datos del formulario
 class ContactForm(BaseModel):
@@ -30,3 +32,11 @@ async def contact_submit(form_data: ContactForm):
 
 # Inicializar la aplicación Reflex y montarla en la aplicación FastAPI
 rx_app = create_reflex_app(api_transformer=app)
+
+# Montar los archivos estáticos de Reflex
+current_dir = os.path.dirname(os.path.abspath(__file__))
+static_files_path = os.path.join(current_dir, ".web", "_static")
+app.mount("/_static", StaticFiles(directory=static_files_path), name="static")
+
+# Montar la aplicación Reflex en la raíz
+app.mount("/", rx_app)

@@ -4,7 +4,7 @@ import sqlmodel
 
 @rx.ModelRegistry.register
 class Usuarios(rx.Model):
-    id_usuario: int | None = sqlmodel.Field(default=None, primary_key=True)
+    id_usuario: int = sqlmodel.Field(primary_key=True)
     nombre: str
     correo: str
     mensaje: str
