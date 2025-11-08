@@ -1,6 +1,5 @@
 import reflex as rx
 import sqlmodel
-import httpx # Added httpx for making HTTP requests
 
 
 @rx.ModelRegistry.register
@@ -21,23 +20,18 @@ class State(rx.State):
         if not open:
             self.show_success = False
 
-    async def submit_form(self, form_data: dict): # Changed to async
+    def submit_form(self, form_data: dict):
         self.form_data = form_data
-        try:
-            # Replace direct database interaction with an HTTP POST request to the FastAPI backend
-            # Make sure to replace "YOUR_RENDER_BACKEND_URL" with your actual Render URL
-            backend_url = "https://mi-pagina-web-y37z.onrender.com"
-            response = await httpx.post(f"{backend_url}/contact", json=form_data)
-            response.raise_for_status() # Raise an exception for HTTP errors (4xx or 5xx)
-            self.show_success = True
-        except httpx.HTTPStatusError as e:
-            print(f"HTTP error occurred: {e}")
-            # Optionally, set an error message for the user
-            self.show_success = False
-        except httpx.RequestError as e:
-            print(f"An error occurred while requesting {e.request.url!r}: {e}")
-            # Optionally, set an error message for the user
-            self.show_success = False
+        with rx.session() as session:
+            session.add(
+                Usuarios(
+                    nombre=form_data["nombre"],
+                    correo=form_data["correo"],
+                    mensaje=form_data["mensaje"],
+                )
+            )
+            session.commit()
+        self.show_success = True
 
 
 def contacto_form() -> rx.Component:
