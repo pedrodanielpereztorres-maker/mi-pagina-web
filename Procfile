@@ -1,1 +1,1 @@
-web: gunicorn custom_server:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT
+web: reflex export && mv public/* .web/_static/ && gunicorn custom_server:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT
