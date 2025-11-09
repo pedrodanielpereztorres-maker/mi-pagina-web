@@ -5,7 +5,7 @@ from typing import Optional
 # Define el modelo de la base de datos correctamente como una tabla.
 
 
-@rx.Model.add_registry
+@rx.ModelRegistry.register
 class Usuarios(rx.Model, table=True):
     id_usuario: Optional[int] = sqlmodel.Field(default=None, primary_key=True)
     nombre: str
