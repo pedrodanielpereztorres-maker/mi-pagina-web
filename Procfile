@@ -1,1 +1,1 @@
-web: reflex init && reflex export && mkdir -p .web/_static/ && mv public/* .web/_static/ && alembic upgrade head && gunicorn custom_server:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT
+web: alembic upgrade head && reflex run --env prod --host 0.0.0.0 --port $PORT

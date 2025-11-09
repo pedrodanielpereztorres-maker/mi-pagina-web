@@ -1,6 +1,13 @@
 import reflex as rx
-import json
+import sqlmodel
+from typing import Optional
 
+# Define el modelo de la base de datos correctamente como una tabla.
+class Usuarios(rx.Model, table=True):
+    id_usuario: Optional[int] = sqlmodel.Field(default=None, primary_key=True)
+    nombre: str
+    correo: str
+    mensaje: str
 
 class State(rx.State):
     dialog_open: bool = False
@@ -12,25 +19,19 @@ class State(rx.State):
         if not open:
             self.show_success = False
 
-    async def submit_form(self, form_data: dict):
+    # Esta es la lógica original para guardar el formulario, que usará la DB de rxconfig.
+    def submit_form(self, form_data: dict):
         self.form_data = form_data
-        # Use rx.call_script to make a fetch call from the browser to the FastAPI backend
-        await rx.call_script(
-            f"""
-            fetch('/contact', {{
-                method: 'POST',
-                headers: {{'Content-Type': 'application/json'}},
-                body: {json.dumps(form_data)}
-            }}).then(response => {{
-                if (!response.ok) {{
-                    console.error('Network response was not ok.');
-                }}
-            }});
-            """
-        )
+        with rx.session() as session:
+            session.add(
+                Usuarios(
+                    nombre=form_data["nombre"],
+                    correo=form_data["correo"],
+                    mensaje=form_data["mensaje"],
+                )
+            )
+            session.commit()
         self.show_success = True
-        yield
-
 
 def contacto_form() -> rx.Component:
     return rx.dialog.root(
@@ -383,8 +384,8 @@ def pagina_principal() -> rx.Component:
                                md="2em", lg="2.5em", xl="3em"),
     )
 
-
-def create_reflex_app(api_transformer=None):
-    app = rx.App(stylesheets=["/custom.css"], api_transformer=api_transformer)
-    app.add_page(pagina_principal, route="/")
-    return app
+# Crea la instancia de la app de Reflex.
+app = rx.App(
+    stylesheets=["/custom.css"],
+)
+app.add_page(pagina_principal, route="/")
