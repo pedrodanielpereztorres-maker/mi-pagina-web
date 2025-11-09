@@ -1,15 +1,5 @@
 import reflex as rx
-import sqlmodel
-from typing import Optional
-
-# Define el modelo de la base de datos correctamente como una tabla.
-
-
-class Usuarios(rx.Model, table=True, extend_existing=True):
-    id: Optional[int] = sqlmodel.Field(default=None, primary_key=True)
-    nombre: str
-    correo: str
-    mensaje: str
+from hola.models import Usuarios
 
 
 class State(rx.State):
