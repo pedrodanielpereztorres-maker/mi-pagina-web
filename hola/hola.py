@@ -3,16 +3,22 @@ import sqlmodel
 from typing import Optional
 
 # Define el modelo de la base de datos correctamente como una tabla.
+
+
 class Usuarios(rx.Model, table=True):
     id_usuario: Optional[int] = sqlmodel.Field(default=None, primary_key=True)
     nombre: str
     correo: str
     mensaje: str
 
+
 class State(rx.State):
     dialog_open: bool = False
     show_success: bool = False
     form_data: dict = {}
+
+    def open_dialog(self):
+        self.dialog_open = True
 
     def set_dialog_open(self, open: bool):
         self.dialog_open = open
@@ -32,6 +38,7 @@ class State(rx.State):
             )
             session.commit()
         self.show_success = True
+
 
 def contacto_form() -> rx.Component:
     return rx.dialog.root(
@@ -383,6 +390,7 @@ def pagina_principal() -> rx.Component:
         padding=rx.breakpoints(initial="1em", sm="1.5em",
                                md="2em", lg="2.5em", xl="3em"),
     )
+
 
 # Crea la instancia de la app de Reflex.
 app = rx.App(
