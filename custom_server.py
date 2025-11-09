@@ -30,13 +30,11 @@ async def contact_submit(form_data: ContactForm):
     except Exception as e:
         return {"message": f"Error al guardar el formulario: {str(e)}", "status": "error"}
 
-# Inicializar la aplicación Reflex y montarla en la aplicación FastAPI
-rx_app = create_reflex_app(api_transformer=app)
+# Inicializar la aplicación Reflex, que agregará sus rutas a la app de FastAPI
+create_reflex_app(api_transformer=app)
 
-# Montar los archivos estáticos de Reflex
+# Montar los archivos estáticos de Reflex si existen
 current_dir = os.path.dirname(os.path.abspath(__file__))
 static_files_path = os.path.join(current_dir, ".web", "_static")
-app.mount("/_static", StaticFiles(directory=static_files_path), name="static")
-
-# Montar la aplicación Reflex en la raíz
-app.mount("/", rx_app)
+if os.path.exists(static_files_path):
+    app.mount("/_static", StaticFiles(directory=static_files_path), name="static")

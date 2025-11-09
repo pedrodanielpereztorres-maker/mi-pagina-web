@@ -1,13 +1,5 @@
 import reflex as rx
-import sqlmodel
-
-
-@rx.ModelRegistry.register
-class Usuarios(rx.Model):
-    id_usuario: int = sqlmodel.Field(primary_key=True)
-    nombre: str
-    correo: str
-    mensaje: str
+import json
 
 
 class State(rx.State):
@@ -20,18 +12,24 @@ class State(rx.State):
         if not open:
             self.show_success = False
 
-    def submit_form(self, form_data: dict):
+    async def submit_form(self, form_data: dict):
         self.form_data = form_data
-        with rx.session() as session:
-            session.add(
-                Usuarios(
-                    nombre=form_data["nombre"],
-                    correo=form_data["correo"],
-                    mensaje=form_data["mensaje"],
-                )
-            )
-            session.commit()
+        # Use rx.call_script to make a fetch call from the browser to the FastAPI backend
+        await rx.call_script(
+            f"""
+            fetch('/contact', {{
+                method: 'POST',
+                headers: {{'Content-Type': 'application/json'}},
+                body: {json.dumps(form_data)}
+            }}).then(response => {{
+                if (!response.ok) {{
+                    console.error('Network response was not ok.');
+                }}
+            }});
+            """
+        )
         self.show_success = True
+        yield
 
 
 def contacto_form() -> rx.Component:
@@ -390,5 +388,3 @@ def create_reflex_app(api_transformer=None):
     app = rx.App(stylesheets=["/custom.css"], api_transformer=api_transformer)
     app.add_page(pagina_principal, route="/")
     return app
-
-app = create_reflex_app()
