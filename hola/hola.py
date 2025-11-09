@@ -17,9 +17,6 @@ class State(rx.State):
     show_success: bool = False
     form_data: dict = {}
 
-    def open_dialog(self):
-        self.dialog_open = True
-
     def set_dialog_open(self, open: bool):
         self.dialog_open = open
         if not open:
