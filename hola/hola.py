@@ -5,7 +5,7 @@ from typing import Optional
 # Define el modelo de la base de datos correctamente como una tabla.
 
 
-class Usuarios(rx.Model, table=True):
+class Usuarios(rx.Model, table=True, extend_existing=True):
     id: Optional[int] = sqlmodel.Field(default=None, primary_key=True)
     nombre: str
     correo: str
