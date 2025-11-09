@@ -1,7 +1,2 @@
 reflex
 psycopg2-binary
-gunicorn
-fastapi
-uvicorn
-pydantic
-sqlmodel
