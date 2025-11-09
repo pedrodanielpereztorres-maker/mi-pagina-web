@@ -5,6 +5,7 @@ from typing import Optional
 # Define el modelo de la base de datos correctamente como una tabla.
 
 
+@rx.Model.add_registry
 class Usuarios(rx.Model, table=True):
     id_usuario: Optional[int] = sqlmodel.Field(default=None, primary_key=True)
     nombre: str
@@ -25,16 +26,20 @@ class State(rx.State):
     # Esta es la lógica original para guardar el formulario, que usará la DB de rxconfig.
     def submit_form(self, form_data: dict):
         self.form_data = form_data
-        with rx.session() as session:
-            session.add(
-                Usuarios(
-                    nombre=form_data["nombre"],
-                    correo=form_data["correo"],
-                    mensaje=form_data["mensaje"],
+        try:
+            with rx.session() as session:
+                session.add(
+                    Usuarios(
+                        nombre=form_data["nombre"],
+                        correo=form_data["correo"],
+                        mensaje=form_data["mensaje"],
+                    )
                 )
-            )
-            session.commit()
-        self.show_success = True
+                session.commit()
+            self.show_success = True
+            return rx.window_alert("¡Formulario enviado con éxito!")
+        except Exception as e:
+            return rx.window_alert(f"Error al enviar el formulario: {e}")
 
 
 def contacto_form() -> rx.Component:
