@@ -5,9 +5,8 @@ from typing import Optional
 # Define el modelo de la base de datos correctamente como una tabla.
 
 
-@rx.ModelRegistry.register
 class Usuarios(rx.Model, table=True):
-    id_usuario: Optional[int] = sqlmodel.Field(default=None, primary_key=True)
+    id: Optional[int] = sqlmodel.Field(default=None, primary_key=True)
     nombre: str
     correo: str
     mensaje: str
@@ -185,7 +184,7 @@ def contacto_form() -> rx.Component:
             max_width="600px",
         ),
         open=State.dialog_open,
-        on_open_change=State.set_dialog_open,
+        on_open_change=lambda open: State.set_dialog_open(open),
     )
 
 
